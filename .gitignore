@@ -1,0 +1,10 @@
+# .NET build artifacts
+bin/
+obj/
+
+# Environment files
+appsettings.json
+*.save
+
+# Node modules
+node_modules/
