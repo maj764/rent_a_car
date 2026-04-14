@@ -12,8 +12,8 @@ DECLARE
     nov_id INT;
 BEGIN
     IF EXISTS (
-        SELECT 1 FROM vozila
-        WHERE LOWER(reigtrska) = LOWER(p_registrska)
+        SELECT 1 FROM vozila v
+        WHERE LOWER(v.reigstrska) = LOWER(p_registrska)
     ) THEN
         RETURN 'Vozilo s to registrsko oznako že obstaja!';
     END IF;
@@ -34,7 +34,7 @@ BEGIN
         RETURN 'Kilometrina ne sme biti negativna!';
     END IF;
 
-    INSERT INTO vozila (reigtrska, letnik, km, status, modeli_id, razred_vozila_id, opis)
+    INSERT INTO vozila (reigstrska, letnik, km, status, modeli_id, razred_vozila_id, opis)
     VALUES (TRIM(p_registrska), p_letnik, p_km, 'na voljo', p_modeli_id, p_razred_id, p_opis)
     RETURNING id INTO nov_id;
 
@@ -62,7 +62,7 @@ BEGIN
     RETURN QUERY
     SELECT
         v.id,
-        v.reigtrska,
+        v.reigstrska,
         v.letnik,
         v.km,
         v.status,
@@ -113,7 +113,7 @@ BEGIN
     RETURN QUERY
     SELECT
         v.id,
-        v.reigtrska,
+        v.reigstrska,
         zn.ime      AS znamka,
         m.ime       AS model,
         r.naziv     AS razred,
@@ -136,8 +136,6 @@ BEGIN
     ORDER BY zn.ime, m.ime;
 END;
 $$ LANGUAGE plpgsql;
-
-SELECT * FROM get_vozila_na_voljo(1, '2026-04-10', '2026-04-15');
 
 
 
@@ -178,8 +176,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM get_modeli_po_znamki(1);
-
 
 
 CREATE OR REPLACE FUNCTION get_razredi_vozil()
@@ -196,5 +192,3 @@ BEGIN
     ORDER BY r.id;
 END;
 $$ LANGUAGE plpgsql;
-
-SELECT * FROM get_razredi_vozil();

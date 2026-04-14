@@ -189,7 +189,7 @@ BEGIN
         rez.konec,
         rez.status,
         rez.opis,
-        v.reigtrska,
+        v.reigstrska,
         zn.ime      AS znamka,
         mo.ime      AS model
     FROM rezervacija rez
@@ -200,8 +200,6 @@ BEGIN
     ORDER BY rez.zacetek DESC;
 END;
 $$ LANGUAGE plpgsql;
-
-SELECT * FROM get_rezervacije_zaposlenega(1);
 
 
 
@@ -227,7 +225,7 @@ BEGIN
         rez.status,
         rez.opis,
         (z.ime || ' ' || z.priimek)::TEXT AS zaposleni_ime,
-        v.reigtrska,
+        v.reigstrska,
         zn.ime      AS znamka,
         mo.ime      AS model
     FROM rezervacija rez
@@ -268,7 +266,7 @@ BEGIN
         rez.opis,
         (z.ime || ' ' || z.priimek)::TEXT AS zaposleni_ime,
         z.email,
-        v.reigtrska,
+        v.reigstrska,
         zn.ime      AS znamka,
         mo.ime      AS model,
         r.naziv     AS razred,

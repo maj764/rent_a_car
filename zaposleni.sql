@@ -28,8 +28,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT prijava_zaposlenega('janez@podjetje.si', 'geslo123');
-
 
 CREATE OR REPLACE FUNCTION registracija_zaposlenega(
     p_ime     TEXT,
@@ -68,8 +66,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT registracija_zaposlenega('Janez', 'Novak', 'janez@podjetje.si', 'geslo123', 1);
-
 
 
 CREATE OR REPLACE FUNCTION get_zaposleni()
@@ -97,8 +93,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM get_zaposleni();
-
 
 
 CREATE OR REPLACE FUNCTION get_nivoji()
@@ -115,5 +109,3 @@ BEGIN
     ORDER BY n.max_razred;
 END;
 $$ LANGUAGE plpgsql;
-
-SELECT * FROM get_nivoji();

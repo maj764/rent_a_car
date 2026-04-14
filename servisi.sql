@@ -27,10 +27,7 @@ BEGIN
     RETURNING id INTO nov_id;
 
     RETURN 'Servis dodan:' || nov_id;
-END;
-$$ LANGUAGE plpgsql;
-
-SELECT dodaj_servis(3, '2026-04-07', 'redno vzdrževanje', 'Menjava olja in filtrov', 180.50);
+END;$$ LANGUAGE plpgsql;
 
 
 CREATE OR REPLACE FUNCTION zakljuci_servis(p_vozilo_id INT)
@@ -52,8 +49,6 @@ BEGIN
     RETURN 'Vozilo vrnjeno v promet:' || p_vozilo_id;
 END;
 $$ LANGUAGE plpgsql;
-
-SELECT zakljuci_servis(3);
 
 
 
@@ -78,5 +73,3 @@ BEGIN
     ORDER BY s.datum DESC;
 END;
 $$ LANGUAGE plpgsql;
-
-SELECT * FROM get_servisi_vozila(3);
