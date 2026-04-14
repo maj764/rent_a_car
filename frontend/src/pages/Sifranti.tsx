@@ -4,7 +4,7 @@ import Modal from '../components/Modal'
 import './Page.css'
 import { useToastContext } from '../App'
 
-interface Item { id: number; ime?: string; naziv?: string; opis?: string; maxRazred?: number; znamkeId?: number }
+interface Item { id: number; ime?: string; naziv?: string; opis?: string; razred?: number; maxRazred?: number; znamkeId?: number }
 
 type Tab = 'znamke' | 'modeli' | 'razredi' | 'nivoji'
 
@@ -35,7 +35,7 @@ export default function Sifranti() {
     setEditing(null)
     setForm(tab === 'znamke' ? { ime: '' }
       : tab === 'modeli' ? { ime: '', znamkeId: 0 }
-      : tab === 'razredi' ? { naziv: '', opis: '' }
+      : tab === 'razredi' ? { naziv: '', opis: '', razred: 1 }
       : { naziv: '', maxRazred: 1 })
     setShowModal(true)
   }
@@ -44,7 +44,7 @@ export default function Sifranti() {
     setEditing(item)
     setForm(tab === 'znamke' ? { ime: item.ime }
       : tab === 'modeli' ? { ime: item.ime, znamkeId: item.znamkeId }
-      : tab === 'razredi' ? { naziv: item.naziv, opis: item.opis }
+      : tab === 'razredi' ? { naziv: item.naziv, opis: item.opis, razred: item.razred }
       : { naziv: item.naziv, maxRazred: item.maxRazred })
     setShowModal(true)
   }
@@ -111,6 +111,7 @@ export default function Sifranti() {
             <th>Naziv</th>
             {tab === 'modeli' && <th>Znamka</th>}
             {tab === 'razredi' && <th>Opis</th>}
+            {tab === 'razredi' && <th>Razred</th>}
             {tab === 'nivoji' && <th>Max razred</th>}
             <th>Akcije</th>
           </tr>
@@ -122,6 +123,7 @@ export default function Sifranti() {
               <td><strong>{label(item)}</strong></td>
               {tab === 'modeli' && <td>{znamke.find(z => z.id === item.znamkeId)?.ime ?? '-'}</td>}
               {tab === 'razredi' && <td>{item.opis ?? '-'}</td>}
+              {tab === 'razredi' && <td><span className="badge blue">{item.razred}</span></td>}
               {tab === 'nivoji' && <td>{item.maxRazred}</td>}
               <td className="actions">
                 <button className="btn-sm" onClick={() => openEdit(item)}>Uredi</button>
@@ -161,6 +163,13 @@ export default function Sifranti() {
               <div className="field full">
                 <label>Opis</label>
                 <input value={form.opis ?? ''} onChange={e => setForm({ ...form, opis: e.target.value })} />
+              </div>
+            )}
+            {tab === 'razredi' && (
+              <div className="field full">
+                <label>Razred (številka)</label>
+                <input type="number" min={1} value={form.razred ?? 1}
+                  onChange={e => setForm({ ...form, razred: +e.target.value })} />
               </div>
             )}
             {tab === 'nivoji' && (
